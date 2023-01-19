@@ -8,6 +8,7 @@
 - Press '`Esc`' or '`q`' or '`w`' or '`Ctrl+q`' or '`Ctrl+w`' quit.
 - Yes, all colors everywhere are randomly generated every time just because.
 ---
+Note to self:
 Use the following commands to commit and push the changes:
 
 Run the command git add . to add the changes to the repository.
