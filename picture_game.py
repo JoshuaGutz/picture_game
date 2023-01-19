@@ -3,32 +3,55 @@ os.environ['PYGAME_HIDE_SUPPORT_PROMPT'] = "hide"
 import json
 import random
 import pygame
-import ctypes
+#import ptext
 
 # Get the directory path of the script, json, and images
 dir_path = os.path.dirname(os.path.abspath(__file__))
 json_path = os.path.join(dir_path, "json")
 images_path = os.path.join(dir_path, "images")
 
-def show_instructions():
-    message = "Instructions: Click on the boxes to reveal images. They disappear after 1 second.\n\nMake your own categories with json!\n\nEsc and ctrl+w close the game.\n\nr resets it with 5 new random categories."
-    ctypes.windll.user32.MessageBoxW(0, message, "Instructions", 0x40 | 0x1 | 0x00200000)
-    #The ctypes library is used to call functions from the Windows API, which allows you to interact with the operating system in a low-level way.
-    #The windll.user32.MessageBoxW function is a specific function from the Windows API that creates and displays a message box.
-    #The W in the function name stands for wide character, which means the function can handle Unicode characters (this is important for internationalization).
-    #The function takes four arguments:
-    #The first argument 0 is the handle to the parent window. A value of 0 means that no parent window is specified.
-    #The second argument is the message text that will be displayed in the message box.
-    #The third argument is the title of the message box.
-    #The fourth argument is a combination of flags that specify the behavior and appearance of the message box.
-    #Here is what each flag used in the fourth argument of the function does:
-    #0x40 is the OK button.
-    #0x1 is the icon exclamation.
-    #So, the function call ctypes.windll.user32.MessageBoxW(0, message, "Instructions", 0x40 | 0x1) creates a message box with the message from the variable "message" as the message text, "Instructions" as the title of the message box and an OK button and an exclamation icon.
-    #You can use the MB_SERVICE_NOTIFICATION flag to suppress the system audio notification when the message box appears. 
-    #The MB_SERVICE_NOTIFICATION flag is 0x00200000, so you can add that flag to the flags argument in the MessageBoxW function call.
+def random_rgb_color():
+    r = random.randint(0, 255)
+    g = random.randint(0, 255)
+    b = random.randint(0, 255)
+    return (r, g, b)
 
-# Call the function to show the message box
+def show_instructions():
+    font = pygame.font.Font(None, 30)
+    instructions_text1 = "Welcome to the game. Click or press any key to begin!"
+    instructions_text2 = "Click on the boxes to reveal images. They disappear after 1 second."
+    instructions_text3 = "Make your own categories with json!"
+    instructions_text4 = "Press 'r' to reset with 5 new random categories."
+    instructions_text5 = "Press 'i' to revisit these instructions."
+    instructions_text6 = "Press 'Esc' or 'q' or 'w' or 'Ctrl+q' or 'Ctrl+w' quit."
+    instructions_text7 = "Yes, all colors everywhere are randomly generated every time just because."
+    instructions_text = "\n".join([instructions_text1, instructions_text2, instructions_text3, instructions_text4, instructions_text5])
+    instructions_text = instructions_text1 + "\n" + instructions_text2 + "\n" + instructions_text3 + "\n" + instructions_text4 + "\n" + instructions_text5
+    print(instructions_text)
+    #text_surface = font.render(instructions_text, True, (255, 255, 255))
+    text_surface1 = font.render(instructions_text1, True, random_rgb_color())
+    text_surface2 = font.render(instructions_text2, True, random_rgb_color())
+    text_surface3 = font.render(instructions_text3, True, random_rgb_color())
+    text_surface4 = font.render(instructions_text4, True, random_rgb_color())
+    text_surface5 = font.render(instructions_text5, True, random_rgb_color())
+    text_surface6 = font.render(instructions_text6, True, random_rgb_color())
+    text_surface7 = font.render(instructions_text7, True, random_rgb_color())
+    #text_surface = font.render(instructions_text, True, random_rgb_color())
+    screen.fill(random_rgb_color())
+    screen.blit(text_surface1, (25, 50))
+    screen.blit(text_surface2, (25, 100))
+    screen.blit(text_surface3, (25, 150))
+    screen.blit(text_surface4, (25, 200))
+    screen.blit(text_surface5, (25, 250))
+    screen.blit(text_surface6, (25, 300))
+    screen.blit(text_surface7, (25, 350))
+    #screen.blit(text_surface, (50, 50))
+    #ptext.draw(instructions_text, (10, 10), color=random_rgb_color())  # Recognizes newline characters.
+    pygame.display.update()
+    while True:
+        for event in pygame.event.get():
+            if event.type == pygame.KEYDOWN or event.type == pygame.MOUSEBUTTONDOWN:
+                return
 
 def load_categories():
     # Get a list of all category-*.json files in the json subdirectory
@@ -52,12 +75,6 @@ def load_categories():
         except Exception as e:
             print(f"An unexpected error occurred: {e}")
     return categories
-
-def random_rgb_color():
-    r = random.randint(0, 255)
-    g = random.randint(0, 255)
-    b = random.randint(0, 255)
-    return (r, g, b)
 
 def draw_game_board(screen, categories, font=None):
     if font is None:
@@ -165,11 +182,14 @@ while running:
         if event.type == pygame.QUIT:
             running = False
         elif event.type == pygame.KEYDOWN:
-            if (event.key == pygame.K_ESCAPE) or (event.mod & pygame.KMOD_CTRL and event.key == pygame.K_w):
+            if (event.key == pygame.K_ESCAPE) or (event.mod & pygame.KMOD_CTRL and event.key == pygame.K_w) or (event.mod & pygame.KMOD_CTRL and event.key == pygame.K_q) or (event.key == pygame.K_q) or (event.key == pygame.K_w):
                 running = False
             elif (event.key == pygame.K_r):
                 redrawing = True
                 categories = load_categories()
+            elif (event.key == pygame.K_i):
+                redrawing = True
+                show_instructions()
         elif event.type == pygame.VIDEORESIZE:
             resizing = True
             width, height = event.size
