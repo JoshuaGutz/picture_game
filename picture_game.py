@@ -3,11 +3,20 @@ os.environ['PYGAME_HIDE_SUPPORT_PROMPT'] = "hide"
 import json
 import random
 import pygame
+import ctypes
 
 # Get the directory path of the script, json, and images
 dir_path = os.path.dirname(os.path.abspath(__file__))
 json_path = os.path.join(dir_path, "json")
 images_path = os.path.join(dir_path, "images")
+
+def show_instructions():
+    message = "Instructions: Click on the boxes to reveal images. They disappear after 1 second.\n\nMake your own categories with json!\n\nEsc and ctrl+w close the game.\n\nr resets it with 5 new random categories."
+    ctypes.windll.user32.MessageBoxW(0, message, "Instructions", 0x40 | 0x1 | 0x00200000)
+#You can use the MB_SERVICE_NOTIFICATION flag to suppress the system audio notification when the message box appears. 
+#The MB_SERVICE_NOTIFICATION flag is 0x00200000, so you can add that flag to the flags argument in the MessageBoxW function call.
+
+# Call the function to show the message box
 
 def load_categories():
     # Get a list of all category-*.json files in the json subdirectory
@@ -125,6 +134,8 @@ info = pygame.display.Info()
 width = int(info.current_w * 0.4)
 height = int(info.current_h * 0.4)
 screen = pygame.display.set_mode((width, height), pygame.RESIZABLE)
+
+show_instructions()
 
 # Main loop
 resizing = False
