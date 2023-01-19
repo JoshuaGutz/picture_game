@@ -13,8 +13,20 @@ images_path = os.path.join(dir_path, "images")
 def show_instructions():
     message = "Instructions: Click on the boxes to reveal images. They disappear after 1 second.\n\nMake your own categories with json!\n\nEsc and ctrl+w close the game.\n\nr resets it with 5 new random categories."
     ctypes.windll.user32.MessageBoxW(0, message, "Instructions", 0x40 | 0x1 | 0x00200000)
-#You can use the MB_SERVICE_NOTIFICATION flag to suppress the system audio notification when the message box appears. 
-#The MB_SERVICE_NOTIFICATION flag is 0x00200000, so you can add that flag to the flags argument in the MessageBoxW function call.
+    #The ctypes library is used to call functions from the Windows API, which allows you to interact with the operating system in a low-level way.
+    #The windll.user32.MessageBoxW function is a specific function from the Windows API that creates and displays a message box.
+    #The W in the function name stands for wide character, which means the function can handle Unicode characters (this is important for internationalization).
+    #The function takes four arguments:
+    #The first argument 0 is the handle to the parent window. A value of 0 means that no parent window is specified.
+    #The second argument is the message text that will be displayed in the message box.
+    #The third argument is the title of the message box.
+    #The fourth argument is a combination of flags that specify the behavior and appearance of the message box.
+    #Here is what each flag used in the fourth argument of the function does:
+    #0x40 is the OK button.
+    #0x1 is the icon exclamation.
+    #So, the function call ctypes.windll.user32.MessageBoxW(0, message, "Instructions", 0x40 | 0x1) creates a message box with the message from the variable "message" as the message text, "Instructions" as the title of the message box and an OK button and an exclamation icon.
+    #You can use the MB_SERVICE_NOTIFICATION flag to suppress the system audio notification when the message box appears. 
+    #The MB_SERVICE_NOTIFICATION flag is 0x00200000, so you can add that flag to the flags argument in the MessageBoxW function call.
 
 # Call the function to show the message box
 
