@@ -25,8 +25,8 @@ def show_instructions():
     instructions_text5 = "Press 'i' to revisit these instructions."
     instructions_text6 = "Press 'Esc' or 'q' or 'w' or 'Ctrl+q' or 'Ctrl+w' quit."
     instructions_text7 = "Yes, all colors everywhere are randomly generated every time just because."
-    instructions_text = "\n".join([instructions_text1, instructions_text2, instructions_text3, instructions_text4, instructions_text5])
-    instructions_text = instructions_text1 + "\n" + instructions_text2 + "\n" + instructions_text3 + "\n" + instructions_text4 + "\n" + instructions_text5
+    instructions_text = "\n".join([instructions_text1, instructions_text2, instructions_text3, instructions_text4, instructions_text5, instructions_text6, instructions_text7])
+    instructions_text = instructions_text1 + "\n" + instructions_text2 + "\n" + instructions_text3 + "\n" + instructions_text4 + "\n" + instructions_text5 + "\n" + instructions_text6 + "\n" + instructions_text7
     print(instructions_text)
     #text_surface = font.render(instructions_text, True, (255, 255, 255))
     text_surface1 = font.render(instructions_text1, True, random_rgb_color())
